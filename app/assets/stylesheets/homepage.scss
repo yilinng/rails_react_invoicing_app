@@ -1,3 +1,120 @@
 // Place all the styles related to the Homepage controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+@import "bootstrap/scss/bootstrap.scss";
+.bg_primary-color {
+    background-color: #FFFFFF;
+  }
+  .primary-color {
+    background-color: #FFFFFF;
+  }
+  .bg_secondary-color {
+    background-color: #293241;
+  }
+  .secondary-color {
+    color: #293241;
+  }
+
+  .custom-button.btn {
+    background-color: #293241;
+    color: #FFF;
+    border: none;
+    margin-right: 50px;
+  }
+  .custom-button.btn:hover {
+    color: #FFF !important;
+    border: none;
+  }
+  .hero {
+    width: 100vw;
+    height: 50vh;
+  }
+  .hero img {
+    object-fit: cover;
+    object-position: top;
+    height: 100%;
+    width: 100%;
+  }
+  .overlay {
+    height: 100%;
+    width: 100%;
+    opacity: 0.4;
+  }
+
+  /*
+  signup and login css
+  */
+
+  .LoginForm{
+    border: 1px solid #ccc;
+  }
+
+  .LoginForm input[type=text], .LoginForm input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+  }
+  
+  .LoginForm input[type=text]:focus, .LoginForm input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+  
+  .LoginForm hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+  }
+
+  .LoginForm .signContainer{
+    padding: 16px;
+  }
+
+
+/* ui/spinner style*/
+#loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 120px;
+  height: 120px;
+  margin: -76px 0 0 -76px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* not found 404*/
+
+.notFound{
+  margin: 30px auto;
+}
+
+/* error style*/
+
+.error{
+  color: #DC143C;
+  font-size: medium;
+  font-weight: 500;
+}
+
+/* invoice list*/
+
+.invoicelist .buttonList button {
+  margin: auto 5px;
+}
