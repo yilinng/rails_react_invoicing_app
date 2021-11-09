@@ -24,14 +24,15 @@ export default function Header() {
        .then(response => {
            if(response.ok){
                return response.json();
-           }
-           setError("Network response was not ok.");
+           }else {
+            throw new Error('something wrong.');
+          }
        })
-       .then(response => {
-        console.log('done...to list page', response);
+       .then(() => {
+        console.log('logout success');
         history.push("/login");   
        })
-       .catch(error => setError(error.message));
+       .catch(error => setError(error));
     }
 
     return (
