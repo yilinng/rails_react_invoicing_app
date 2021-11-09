@@ -15,7 +15,7 @@ export default function Header() {
 
        const token = document.querySelector('meta[name="csrf-token"]').content;
        fetch(url, {
-           method: "POST",
+           method: "DELETE",
            headers: {
             "X-CSRF-Token": token,
             "Content-Type": "application/json"
