@@ -1,9 +1,8 @@
-import React, {useState, useEffect} from 'react'
-import { Link, useHistory } from "react-router-dom";
+import React, { useState, useEffect } from 'react'
+import { Link } from "react-router-dom";
 
 export default function List() {
 
-  const history = useHistory();
   const [error ,setError] = useState('');
   const [invoice, setInvoice] = useState([]);
 
@@ -26,41 +25,41 @@ export default function List() {
         throw new Error('something wrong. please try again.');
       }
     })
-    .then(() => {
-     console.log('delete success');
-     history.go(0);
+    .then((res) => {
+     console.log(res.message);
+     handleLoading();
     })
     .catch(error => console.log(error))
   }
 
-  useEffect(() => {
-    const handleLoading = () => {
+  const handleLoading = () => {
       
-      const url =  "/api/v1/invoices";
-      const token = document.querySelector('meta[name="csrf-token"]').content;
-      fetch(url, {
-          method: "GET",
-          headers: {
-           "X-CSRF-Token": token,
-           "Content-Type": "application/json"
-         }
-      })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('something wrong. please try again.');
-        }
-      
-      })
-      .then(response => {
-       console.log('done...to list page', response);
-        setInvoice(response);
-      })
-      .catch(error => setError(error.message))
+    const url =  "/api/v1/invoices";
+    const token = document.querySelector('meta[name="csrf-token"]').content;
+    fetch(url, {
+        method: "GET",
+        headers: {
+         "X-CSRF-Token": token,
+         "Content-Type": "application/json"
+       }
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('something wrong. please try again.');
+      }
+    
+    })
+    .then(response => {
+     console.log('done...to list page', response);
+      setInvoice(response);
+    })
+    .catch(error => setError(error.message))
+  }
 
-    }
-    handleLoading()
+  useEffect(() => {
+    handleLoading();
   },[])
 
     return (

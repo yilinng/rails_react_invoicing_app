@@ -15,7 +15,7 @@ export default function Header() {
 
        const token = document.querySelector('meta[name="csrf-token"]').content;
        fetch(url, {
-           method: "DELETE",
+           method: "POST",
            headers: {
             "X-CSRF-Token": token,
             "Content-Type": "application/json"
@@ -28,11 +28,11 @@ export default function Header() {
             throw new Error('something wrong.');
           }
        })
-       .then(() => {
-        console.log('logout success');
+       .then((res) => {
+        console.log(res.message);
         history.push("/login");   
        })
-       .catch(error => setError(error));
+       .catch(error => setError(error.message));
     }
 
     return (

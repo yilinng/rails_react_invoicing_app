@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
       post "/signup", to: "users#create"
       post "/login", to: "users#login"
-      delete "/logout", to: "users#destroy"
+      post "/logout", to: "users#destroy"
       get "/autoLogin", to: "users#auto_login"
       get "/invoices", to: "invoices#index"
       get '/invoices/:id', to: 'invoices#show'

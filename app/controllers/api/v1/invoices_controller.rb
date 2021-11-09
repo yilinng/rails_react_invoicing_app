@@ -13,7 +13,7 @@ class Api::V1::InvoicesController < ApplicationController
         @invoice.user_id = session[:user_id]
         #invoice detail
         if @invoice.save         
-        render json: {invoice: @invoice}, status: :created
+            render json: {invoice: @invoice}, status: :created
         else
             render json: {transaction: @transaction.errors}, status: :unprocessable_entity
         end
@@ -25,7 +25,12 @@ class Api::V1::InvoicesController < ApplicationController
     end
 
     def destroy
+        if @invoice       
         @invoice.destroy
+            render json: { message: 'delete success!!' }
+        else
+            render json: { message: 'delete fail, please try again' }, status: :unprocessable_entity 
+        end
     end
 
 
