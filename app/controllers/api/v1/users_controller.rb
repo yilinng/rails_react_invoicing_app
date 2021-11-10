@@ -43,15 +43,16 @@ class Api::V1::UsersController < ApplicationController
   def destroy
     #clear this user token
     @token = Token.find_by(user_login: session[:user_id])
-    if @Token
-    @token.destroy
 
-    session[:user_id] = nil
-    cookies[:my_csrf_token] = nil
-    render json: { message: 'log out success!!' }
-    else
-      render json: { message: 'logout fail, please try again' }, status: :unprocessable_entity
-    end
+    puts @token, "token here..."
+    #if @Token
+      @token.destroy
+      session.delete(:user_id)
+      cookies[:my_csrf_token] = nil
+      render json: { message: 'log out success!!' }
+    #else
+      #render json: { message: 'logout fail, please try again' }, status: :unprocessable_entity
+    #end
   end
 
   def auto_login
