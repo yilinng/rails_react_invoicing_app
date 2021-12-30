@@ -5,10 +5,15 @@ class Api::V1::UsersController < ApplicationController
   def create
     @user = User.create(user_params)
     if @user.valid?
-      session[:user_id] = @user.id
-      cookies[:my_csrf_token]= form_authenticity_token
-      render json: { user: @user }
-    else
+      @token = Token.new(token_params)
+      @token.user_login = @user.id
+      #store user id in session and token table to identity 
+      if @token.save
+        session[:user_id] = @user.id
+        cookies[:my_csrf_token]= form_authenticity_token
+        render json: {user: @user}
+      end
+    else  
       render json: { error: "Invaild email or password"}
     end
   end
@@ -45,14 +50,10 @@ class Api::V1::UsersController < ApplicationController
     @token = Token.find_by(user_login: session[:user_id])
 
     puts @token, "token here..."
-    #if @Token
       @token.destroy
       session.delete(:user_id)
       cookies[:my_csrf_token] = nil
       render json: { message: 'log out success!!' }
-    #else
-      #render json: { message: 'logout fail, please try again' }, status: :unprocessable_entity
-    #end
   end
 
   def auto_login

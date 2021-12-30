@@ -259,9 +259,9 @@ export default function CreateInvoice() {
                              <td>{ txn.name }</td>
                              <td>{ txn.price } </td>
                                 <td className="btnlist">
-                                    <button type="button" style={{marginRight: "10px" ,marginBottom: "5px", backgroundColor:"#009090", color: "white"}} className="btn" data-bs-toggle="modal" data-bs-target="#transactionModalEdit" 
+                                    <button type="button" style={{marginRight: "10px", backgroundColor:"#009090", color: "white"}} className="btn" data-bs-toggle="modal" data-bs-target="#transactionModalEdit" 
                                     onClick={() => {setName(txn.name); setPrice(txn.price); setNextTxnId(txn.id)}}>Edit</button>
-                                    <button type="button" className="btn btn-danger" onClick={() => deleteTransaction(txn.id)}>Delete</button>
+                                    <button type="button" style={{backgroundColor:"#fd5800", color: "white", fontWeight: "bold"}} className="btn" onClick={() => deleteTransaction(txn.id)}>Delete</button>
                                 </td>
                              </tr>
                         ): <tr>
