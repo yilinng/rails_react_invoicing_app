@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import Header from './Header'
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 import Cookies from 'js-cookie';
 
 export default function CreateInvoice() {
 
+    const { id } = useParams();
     const history = useHistory();
     const [error ,setError] = useState('');
     const [loading ,setLoading] = useState('');
     const [invoice, setInvoice] = useState({ name: "", total_price: 0 })
     const [transactions, setTransactions] = useState([]);
-    const [nextTxnId, setNextTxnId] = useState(0);
-    const [user, setUser] = useState('');
+    const [nextTxnId, setNextTxnId] = useState(1);
     const [name, setName] = useState('');
     const [price, setPrice] = useState(0);
+    const [topic, setTopic] = useState('')
+
 
     const saveTransaction = () => {
 
@@ -24,9 +26,7 @@ export default function CreateInvoice() {
         }
 
         if (name.length != 0 && price > 0) {
-
-        setTransactions(oldData => [...oldData, dataToTransaction])
-
+            setTransactions(oldData => [...oldData, dataToTransaction])
         }
 
     }
@@ -45,7 +45,6 @@ export default function CreateInvoice() {
         }
     }
 
-
     const deleteTransaction = (id) => {
         let newList = transactions.filter(function(el) {
             return el.id !== id;
@@ -53,6 +52,7 @@ export default function CreateInvoice() {
     
           setNextTxnId( nextTxnId - 1 );
           setTransactions(newList);
+         
         
     }
 
@@ -74,27 +74,16 @@ export default function CreateInvoice() {
         setPrice(0);
     }
 
-    const handleName = (getname) => {
-
-        //console.log(getname)
-        
-        setInvoice(prevState => ({
-            ...prevState,
-            name: getname
-        }))
-        
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if(transactions.length < 1 || invoice.name.length < 1){
+        if(transactions.length < 1 || topic.length < 1){
            return setError("you have to input name and price...")
         }    
 
         const passData = {
-            name: invoice.name,
-            user_id: user.user_id,
+            name: topic,
             names: [],
             prices: []
         }
@@ -106,11 +95,11 @@ export default function CreateInvoice() {
   
         setLoading("Creating Invoice, please wait ...");
   
-        const url =  "/api/v1/invoices/create";
+        const url =  "/api/v1/invoices/" + id;
         const token = document.querySelector('meta[name="csrf-token"]').content;
      
         fetch(url, {
-            method: "POST",
+            method: "PATCH",
             headers: {
              "X-CSRF-Token": token,
              "Content-Type": "application/json"
@@ -141,7 +130,7 @@ export default function CreateInvoice() {
 
     useEffect(() => {
         const handleLoading = () => {
-          const url =  "/api/v1/autoLogin";
+          const url =  "/api/v1/invoices/"+ id;
           const token = document.querySelector('meta[name="csrf-token"]').content;
           fetch(url, {
               method: "GET",
@@ -151,16 +140,25 @@ export default function CreateInvoice() {
              }
           })
           .then(response => {
-              if(response.ok){
-                  return response.json();
+            if (response.ok) {
+                return response.json();
+              } else {
+                throw new Error('something wrong. please try again.');
               }
-              throw new Error("Network response was not ok.");
           })
           .then(response => {
-           console.log('user loading done...', response);
-           setUser(response)
+            response.invoice && response.invoice.names.map((item, idx) => {
+                const dataToTransaction = {
+                    id: (idx + 1),
+                    name: item,
+                    price: response.invoice.prices[idx]
+                }
+                setTransactions(oldData => [...oldData, dataToTransaction])
+            });         
+           console.log('done...to detail page', response);
+           setTopic(response.invoice.name);
           })
-          .catch(error => console.log(error.message));
+          .catch(error => setError(error.message));
     
         }
         handleLoading()
@@ -174,7 +172,7 @@ export default function CreateInvoice() {
   
     return (
         <div className="container py-3">
-        <Header/>
+        <Header topic={topic}/>
         <div className="container">
         <div className="tab-pane p-3 fade show active">
         <div className="row">
@@ -183,7 +181,7 @@ export default function CreateInvoice() {
             <form onSubmit={(e) => handleSubmit(e)}>
                 <div className="form-group mb-3">
                 <label htmlFor="create-invoice-name" className="form-label">Invoice Name:</label>
-                <input id="create-invoice-name" type="text" className="form-control" placeholder="Invoice Name" onChange={(e) => handleName(e.target.value)}/>
+                <input id="create-invoice-name" type="text" className="form-control" placeholder="Invoice Name" value={topic ? topic : "input topic.."} onChange={(e) => setTopic(e.target.value)}/>
                 </div>
 
                 <div className="form-group mb-3">
@@ -194,8 +192,6 @@ export default function CreateInvoice() {
                 <h3>Transactions </h3>
                 <div className="form-group">
                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#transactionModal">Add Transaction</button>
-
-                
                 <div className="modal fade" id="transactionModal" tabIndex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                     <div className="modal-content">
@@ -206,11 +202,11 @@ export default function CreateInvoice() {
                         <div className="modal-body">
                         <div className="form-group mb-3">
                             <label htmlFor="txn_name_modal" className="form-label">Transaction name:</label>
-                            <input id="txn_name_modal" type="text" className="form-control" onChange={(e) => setName(e.target.value)}/>
+                            <input id="txn_name_modal" type="text" className="form-control" value={name ? name : ''} onChange={(e) => setName(e.target.value)}/>
                         </div>
                         <div className="form-group mb-3">
                             <label htmlFor="txn_price_modal" className="form-label">Price ($):</label>
-                            <input id="txn_price_modal" type="numeric" className="form-control" onChange={(e) => setPrice(e.target.value)}/>
+                            <input id="txn_price_modal" type="numeric" className="form-control" value={price ? price : 0} onChange={(e) => setPrice(e.target.value)}/>
                         </div>
                         </div>
                         <div className="modal-footer">
@@ -220,8 +216,8 @@ export default function CreateInvoice() {
                     </div>
                     </div>
                 </div>
-                 {/* edit transcation*/}
-                 <div className="modal fade" id="transactionModalEdit" tabIndex="-1" aria-labelledby="transactionModalEditLabel" aria-hidden="true">
+                {/* edit transcation*/}
+                <div className="modal fade" id="transactionModalEdit" tabIndex="-1" aria-labelledby="transactionModalEditLabel" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -259,6 +255,7 @@ export default function CreateInvoice() {
                         <tbody>
                         { transactions.length > 0 ? transactions.map(txn => 
                              <tr key={txn.id}>
+                             <td>{ txn.id }</td>    
                              <td>{ txn.name }</td>
                              <td>{ txn.price } </td>
                                 <td className="btnlist">
@@ -276,7 +273,7 @@ export default function CreateInvoice() {
                 </div>
 
                 <div className="form-group">
-                <button style={{backgroundColor: "#5ca904", color: "white", fontWeight: "bolder"}} className="btn">Create Invoice</button>
+                <button  style={{backgroundColor: "#5ca904", color: "white", fontWeight: "bolder"}} className="btn">Update Invoice</button>
                 { loading && <span>{ loading }</span> }
                 {error && <span className="error">{ error }</span>}
                 </div>

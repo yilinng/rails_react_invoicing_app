@@ -8,6 +8,7 @@ export default function InvoiceDetail() {
     const [total_price, setTotal_Price] = useState(0);
     const [names, setNames] = useState([]);
     const [prices, setPrices] = useState([]);
+    const [topic, setopic] = useState('')
     const [error, setError] = useState('')
 
     const { id } = useParams();
@@ -47,6 +48,7 @@ export default function InvoiceDetail() {
            console.log('done...to detail page', response);
            setNames(response.invoice.names);
            setPrices(response.invoice.prices);
+           setopic(response.invoice.name)
           })
           .catch(error => setError(error.message));
     
@@ -61,8 +63,8 @@ export default function InvoiceDetail() {
   
       
     return (
-        <>
-        <Header/>
+        <div className="container py-3">
+        <Header topic={topic}/>
             <div className="single-page">
                 <div className="invoice">
                     <div className="container">
@@ -99,7 +101,7 @@ export default function InvoiceDetail() {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
         

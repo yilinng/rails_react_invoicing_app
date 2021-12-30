@@ -6,6 +6,7 @@ import Signup from "../components/Signup";
 import InvoiceList from "../components/InvoiceList";
 import InvoiceDetail from "../components/InvoiceDetail";
 import CreateInvoice from "../components/CreateInvoice";
+import InvoiceEdit from "../components/InvoiceEdit";
 import NotFound404 from "../components/NotFound404";
 
 export default (
@@ -17,6 +18,7 @@ export default (
       <Route path="/invoices" exact component={InvoiceList} />
       <Route path="/invoices/create" exact component={CreateInvoice} />
       <Route path="/invoices/:id" exact component={InvoiceDetail} />
+      <Route path="/invoices/:id/edit" exact component={InvoiceEdit} />
       <Route path="/404" component={NotFound404}/>
       <Redirect to="/404" />
     </Switch>

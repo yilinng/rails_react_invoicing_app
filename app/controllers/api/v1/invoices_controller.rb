@@ -1,6 +1,6 @@
 class Api::V1::InvoicesController < ApplicationController
     before_action :authorized
-    before_action :set_invoice, only: [:destroy, :show]
+    before_action :set_invoice, only: [:destroy, :show, :update]
 
     def index
         invoices = Invoice.all
@@ -22,6 +22,14 @@ class Api::V1::InvoicesController < ApplicationController
     def show
         #SELECT * FROM invoices LEFT JOIN transactions ON invoices.id=transactions.invoice_id WHERE invoice_id='${req.params.invoice_id}' ORDER BY transactions.id
         render json: { invoice: @invoice }
+    end
+
+    def update
+        if @invoice.update(invoice_params)
+            render json: {invoice: @invoice}, status: :ok
+        else
+            render json: {transaction: @transaction.errors}, status: :unprocessable_entity
+        end
     end
 
     def destroy

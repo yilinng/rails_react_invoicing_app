@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get "/autoLogin", to: "users#auto_login"
       get "/invoices", to: "invoices#index"
       get '/invoices/:id', to: 'invoices#show'
+      patch '/invoices/:id', to: 'invoices#update'
       delete '/invoices/:id', to: 'invoices#destroy'
       post "/invoices/create", to: "invoices#create" 
     end
