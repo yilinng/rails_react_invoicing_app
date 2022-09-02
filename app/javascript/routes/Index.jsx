@@ -19,8 +19,7 @@ export default (
       <Route path="/invoices/create" exact component={CreateInvoice} />
       <Route path="/invoices/:id" exact component={InvoiceDetail} />
       <Route path="/invoices/:id/edit" exact component={InvoiceEdit} />
-      <Route path="/404" component={NotFound404}/>
-      <Redirect to="/404" />
+      <Route path="" component={NotFound404} />
     </Switch>
   </Router>
 );

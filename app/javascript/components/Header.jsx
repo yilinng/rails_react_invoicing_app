@@ -47,9 +47,9 @@ export default function Header({topic}) {
             </Link>
 
             <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-                <Link to={'/invoices'} className="me-3 py-2 text-dark text-decoration-none">home</Link>
-                <Link to={'/invoices/create'} className="me-3 py-2 text-dark text-decoration-none">Create</Link>
-                <button disabled={loading} className="py-2 text-dark text-decoration-none" onClick={handleLogout}>Logout</button>
+                <Link to={'/invoices'} className="me-3 py-2 text-dark text-decoration-none homeLink">home</Link>
+                <Link to={'/invoices/create'} className="me-3 py-2 text-dark text-decoration-none createLink">Create</Link>
+                <button disabled={loading} className="py-2 text-dark text-decoration-none logoutLink" onClick={handleLogout}>Logout</button>
             </nav>
             </div>
 

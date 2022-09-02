@@ -37,7 +37,7 @@ export default function Signup(){
         if (response.ok) {
             return response.json();
           } else {
-            throw new Error('email or password wrong.');
+            throw new Error('Invalid email or password.');
           }
         
        })

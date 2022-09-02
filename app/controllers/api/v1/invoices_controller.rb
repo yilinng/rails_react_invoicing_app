@@ -3,15 +3,13 @@ class Api::V1::InvoicesController < ApplicationController
     before_action :set_invoice, only: [:destroy, :show, :update]
 
     def index
-        invoices = Invoice.all
+        invoices = @user.invoices.all
         render json: invoices
     end
 
     def create
-        #session[:user_id] = @user.id
         @invoice = Invoice.new(invoice_params)
         @invoice.user_id = session[:user_id]
-        #invoice detail
         if @invoice.save         
             render json: {invoice: @invoice}, status: :created
         else

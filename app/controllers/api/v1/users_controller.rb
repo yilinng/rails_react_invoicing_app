@@ -14,7 +14,7 @@ class Api::V1::UsersController < ApplicationController
         render json: {user: @user}
       end
     else  
-      render json: { error: "Invaild email or password"}
+      render json: { error: "Invaild email or password"}, status: :forbidden
     end
   end
 
@@ -24,9 +24,11 @@ class Api::V1::UsersController < ApplicationController
 
     @user = User.find_by(email: params[:email])
 
-    @token = Token.find_by(user_login: @user.id)
+    puts @user, 'from login....'
 
-    if @token
+    @token = Token.find_by(user_login: @user && @user.id)
+
+    if @token 
       return render json: {message: "this user is login"}, status: :forbidden
     end
 
@@ -40,7 +42,7 @@ class Api::V1::UsersController < ApplicationController
         render json: {user: @user}
       end
     else
-      render json: {message: "Invalid email or password"}, status: :forbidden
+      render json: {message: "Invalid email or password."}, status: :forbidden
     end
   end
 

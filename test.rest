@@ -2,8 +2,8 @@ POST http://localhost:3000/api/v1/login
 Content-Type: application/json
 
 {
-    "email": "test@test.com",
-    "password": "test"
+    "email": "test12@test.com",
+    "password": "test12"
 }
 ###
 POST http://localhost:3000/api/v1/signup
@@ -29,21 +29,3 @@ x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJuYW1
 }
 
 ###
-
-
-###  user 2 find trancation 3
-GET http://localhost:3128/invoice/user/2/1
-Content-Type: application/json
-x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJuYW1lIjoiSm9obiBEb2UiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJjb21wYW55X25hbWUiOiJjcmFydF9Db21wYW55In0sImlhdCI6MTYzNTIyMzc2OCwiZXhwIjoxNjM1MzEwMTY4fQ.e75WXaqUnNlCtCkS8HQqnlHYrardguNojbUXwU9wnn0
-###
-GET http://localhost:3128/invoice/3
-Content-Type: application/json
-x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJuYW1lIjoiSm9obiBEb2UiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJjb21wYW55X25hbWUiOiJjcmFydF9Db21wYW55In0sImlhdCI6MTYzNTIyMzc2OCwiZXhwIjoxNjM1MzEwMTY4fQ.e75WXaqUnNlCtCkS8HQqnlHYrardguNojbUXwU9wnn0
-
-
-###
-GET http://localhost:3128/invoice
-x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJuYW1lIjoiSm9obiBEb2UiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJjb21wYW55X25hbWUiOiJjcmFydF9Db21wYW55In0sImlhdCI6MTYzNTIyMzc2OCwiZXhwIjoxNjM1MzEwMTY4fQ.e75WXaqUnNlCtCkS8HQqnlHYrardguNojbUXwU9wnn0
-
-### all about user 2
-GET http://localhost:3128/invoice/user/2
