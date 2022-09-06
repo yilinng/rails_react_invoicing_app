@@ -81,10 +81,10 @@ export default function InvoiceDetail() {
                                     </thead>
                                     <tbody>
                                     { names.length ? names.map((txn, index) => 
-                                    <tr key={index}>
+                                    <tr key={index} className="detail">
                                         <th>{ index + 1}</th>
-                                        <td>{ txn }</td>
-                                        <td>{ prices[index] }</td>
+                                        <td className='name'>{ txn }</td>
+                                        <td className='price'>{ prices[index] }</td>
                                     </tr>
                                      ): null}     
                                     </tbody>

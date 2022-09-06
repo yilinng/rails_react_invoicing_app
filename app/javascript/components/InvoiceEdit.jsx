@@ -191,7 +191,7 @@ export default function CreateInvoice() {
                 <hr />
                 <h3>Transactions </h3>
                 <div className="form-group">
-                <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#transactionModal">Add Transaction</button>
+                <button type="button" id="Add-Transaction" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#transactionModal">Add Transaction</button>
                 <div className="modal fade" id="transactionModal" tabIndex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                     <div className="modal-content">
@@ -200,11 +200,11 @@ export default function CreateInvoice() {
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                        <div className="form-group mb-3">
+                        <div className="createTransaction form-group mb-3">
                             <label htmlFor="txn_name_modal" className="form-label">Transaction name:</label>
                             <input id="txn_name_modal" type="text" className="form-control" value={name ? name : ''} onChange={(e) => setName(e.target.value)}/>
                         </div>
-                        <div className="form-group mb-3">
+                        <div className="createTransactionPrice form-group mb-3">
                             <label htmlFor="txn_price_modal" className="form-label">Price ($):</label>
                             <input id="txn_price_modal" type="numeric" className="form-control" value={price ? price : 0} onChange={(e) => setPrice(e.target.value)}/>
                         </div>
@@ -225,11 +225,11 @@ export default function CreateInvoice() {
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                        <div className="form-group mb-3">
+                        <div className="editTransaction form-group mb-3">
                             <label htmlFor="txn_name_modal" className="form-label">Transaction name:</label>
                             <input id="txn_name_modal" type="text" className="form-control" value={name ? name : ''} onChange={(e) => setName(e.target.value)}/>
                         </div>
-                        <div className="form-group mb-3">
+                        <div className="editTransactionPrice form-group mb-3">
                             <label htmlFor="txn_price_modal" className="form-label">Price ($):</label>
                             <input id="txn_price_modal" type="numeric" className="form-control" value={price ? price : 0} onChange={(e) => setPrice(e.target.value)}/>
                         </div>
@@ -259,9 +259,9 @@ export default function CreateInvoice() {
                              <td>{ txn.name }</td>
                              <td>{ txn.price } </td>
                                 <td className="btnlist">
-                                    <button type="button" style={{marginRight: "10px", backgroundColor:"#009090", color: "white"}} className="btn" data-bs-toggle="modal" data-bs-target="#transactionModalEdit" 
+                                    <button type="button" style={{marginRight: "10px", backgroundColor:"#009090", color: "white"}} className="btn edit" data-bs-toggle="modal" data-bs-target="#transactionModalEdit" 
                                     onClick={() => {setName(txn.name); setPrice(txn.price); setNextTxnId(txn.id)}}>Edit</button>
-                                    <button type="button" style={{backgroundColor:"#fd5800", color: "white", fontWeight: "bold"}} className="btn" onClick={() => deleteTransaction(txn.id)}>Delete</button>
+                                    <button type="button" style={{backgroundColor:"#fd5800", color: "white", fontWeight: "bold"}} className="btn delete" onClick={() => deleteTransaction(txn.id)}>Delete</button>
                                 </td>
                              </tr>
                         ): <tr>
@@ -273,9 +273,9 @@ export default function CreateInvoice() {
                 </div>
 
                 <div className="form-group">
-                <button  style={{backgroundColor: "#5ca904", color: "white", fontWeight: "bolder"}} className="btn">Update Invoice</button>
+                <button  style={{backgroundColor: "#5ca904", color: "white", fontWeight: "bolder"}} className="btn updateOne">Update Invoice</button>
                 { loading && <span>{ loading }</span> }
-                {error && <span className="error">{ error }</span>}
+                {error && <span className="EditError">{ error }</span>}
                 </div>
                 </div>
             </form>
