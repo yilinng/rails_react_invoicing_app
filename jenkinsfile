@@ -49,7 +49,7 @@ pipeline {
 }
 
 def initialize() {
-    sh 'docker-compose -f docker-compose-jenkins.yml up --build --detach'
+    sh '/usr/local/bin/docker-compose -f docker-compose-jenkins.yml up --build --detach'
 }
 
 def test() {
@@ -67,7 +67,7 @@ def test() {
           return true
         }
     }
-    
+
 
     sh 'docker exec vpx-web-test sh -c "cd app/ && RAILS_ENV=test bundle exec rspec -f documentation"'
     sh 'docker exec vpx-web-test sh -c "cd app/ && yarn test"'
@@ -81,6 +81,6 @@ def test() {
     error("Build failed")
   }
   finally{
-    sh 'docker-compose -f docker-compose-jenkins.yml down'
+    sh '/usr/local/bin/docker-compose -f docker-compose-jenkins.yml down'
   }
 }
