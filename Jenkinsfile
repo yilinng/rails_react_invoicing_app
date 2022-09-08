@@ -49,7 +49,7 @@ pipeline {
 }
 
 def initialize() {
-    sh 'docker-compose -f docker-compose-jenkins.yml up --build --detach'
+    sh '/usr/local/bin/docker-compose -f docker-compose-jenkins.yml up --build --detach'
 }
 
 def test() {
@@ -81,6 +81,6 @@ def test() {
     error("Build failed")
   }
   finally{
-    sh 'docker-compose -f docker-compose-jenkins.yml down'
+    sh '/usr/local/bin/docker-compose -f docker-compose-jenkins.yml down'
   }
 }
