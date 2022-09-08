@@ -67,6 +67,7 @@ def test() {
           return true
         }
     }
+    
 
     sh 'docker exec vpx-web-test sh -c "cd app/ && RAILS_ENV=test bundle exec rspec -f documentation"'
     sh 'docker exec vpx-web-test sh -c "cd app/ && yarn test"'
