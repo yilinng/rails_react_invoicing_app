@@ -1,11 +1,11 @@
 pipeline {
-    agent { dockerfile true }
+    agent {
+        docker { image 'node:16.13.1-alpine' }
+    }
     stages {
         stage('Test') {
             steps {
-              echo 'Hello ruby!!'
-              sh 'ruby --version'
-              sh 'echo MyCustomEnvVar=$MyCustomEnvVar'
+                sh 'node --version'
             }
         }
     }
