@@ -64,8 +64,14 @@ GEM
     bindex (0.8.1)
     bootsnap (1.9.1)
       msgpack (~> 1.0)
+    brakeman (5.3.1)
     builder (3.2.4)
     byebug (11.1.3)
+    ci_reporter (2.0.0)
+      builder (>= 2.1.2)
+    ci_reporter_rspec (1.0.0)
+      ci_reporter (~> 2.0)
+      rspec (>= 2.14, < 4)
     concurrent-ruby (1.1.9)
     crass (1.0.6)
     diff-lcs (1.5.0)
@@ -136,6 +142,10 @@ GEM
       rake (>= 0.13)
       thor (~> 1.0)
     rake (13.0.6)
+    rspec (3.11.0)
+      rspec-core (~> 3.11.0)
+      rspec-expectations (~> 3.11.0)
+      rspec-mocks (~> 3.11.0)
     rspec-core (3.11.0)
       rspec-support (~> 3.11.0)
     rspec-expectations (3.11.0)
@@ -201,7 +211,10 @@ PLATFORMS
 DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.4)
+  brakeman
   byebug
+  ci_reporter
+  ci_reporter_rspec
   factory_bot_rails
   jbuilder (~> 2.7)
   jwt

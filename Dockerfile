@@ -24,5 +24,5 @@ RUN gem install bundler -v 2.1.4 && \
   bundle install --jobs 20 && \
   yarn install --check-files
 
-ENV MyCustomEnvVar="there is env form dockerfile!!!"
+
 COPY . /myapp
